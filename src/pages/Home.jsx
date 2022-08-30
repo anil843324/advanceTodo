@@ -1,25 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { MdDelete } from "react-icons/md";
-let arr = [
-  { items: "Apple purchage from market", id: 1, check: false },
-  { items: "Orange purchage from market", id: 2, check: true },
-  { items: "Brinjal purchage from market", id: 3, check: false },
-  { items: "Radish purchage from market", id: 4, check: true },
-  { items: "Cucumber purchage from market", id: 5, check: false },
-  { items: "Gava purchage from market", id: 6, check: true },
-];
+// let arr = [
+//   { items: "Apple purchage from market", id: 1, check: false },
+//   { items: "Orange purchage from market", id: 2, check: true },
+//   { items: "Brinjal purchage from market", id: 3, check: false },
+//   { items: "Radish purchage from market", id: 4, check: true },
+//   { items: "Cucumber purchage from market", id: 5, check: false },
+//   { items: "Gava purchage from market", id: 6, check: true },
+// ];
+
+// get local storage data 
+const getLocalStorageData=()=>{
+
+        const lists=localStorage.getItem('todoData')
+       if(lists){
+
+        return  JSON.parse(lists)
+       }else{
+        return []
+       }
+   
+}
+
+
 
 const Home = () => {
+
   const [toggle, setToggle] = useState({
     all: true,
     active: false,
     completed: false,
   });
 
-  const [data, setData] = useState(arr);
+  // const [data, setData] = useState(arr);
 
-  console.log(data);
+   const [input,setInput]=useState('');
+
+   const [allData,setAllData]=useState(getLocalStorageData())
+
 
   const handleClick = (props) => {
     if (props === "all") {
@@ -31,7 +50,7 @@ const Home = () => {
           completed: false,
         };
       });
-      setData(arr);
+      //  setAllData(addData);
     } else if (props === "active") {
       setToggle((i) => {
         return {
@@ -41,9 +60,9 @@ const Home = () => {
           completed: false,
         };
       });
-      let filterData = data.filter((el) => el.check === false);
+      let filterData = allData.filter((el) => el.check === false);
 
-      setData(filterData);
+       setAllData(filterData);
     } else if (props === "completed") {
       setToggle((i) => {
         return {
@@ -52,17 +71,17 @@ const Home = () => {
           completed: true,
         };
       });
-      let filterData = arr.filter((el) => el.check === true);
+      let filterData = allData.filter((el) => el.check === true);
 
-      setData(filterData);
+      setAllData(filterData);
     }
   };
 
   const handleChange = (e) => {
     const { value, checked } = e.target;
 
-    setData(
-      data.map((el) => {
+    setAllData(
+      allData.map((el) => {
         if (el.items === value) {
           return { ...el, check: true };
         }
@@ -72,13 +91,27 @@ const Home = () => {
     );
   };
 
+   // add data 
+
+    const addData=()=>{
+
+         if(!input){
+          alert("Please add items")
+         }else{
+     
+           setAllData( [...allData,{ items:input, id: new Date().getTime().toString(), check: false }])
+           setInput('')
+         }
+ 
+    }
+   
 
   //  delete single Data
     const handleDeleteSinglData=(index)=>{
           
-      let filterData = data.filter((el) => el.id !== index);
+      let filterData = addData.filter((el) => el.id !== index);
 
-      setData(filterData);
+      setAllData(filterData);
      
 
 
@@ -87,14 +120,22 @@ const Home = () => {
     // delete all the data
     const handleDeleteAll=()=>{
         
-      let filterData = arr.filter((el) => el.check !== true);
+      let filterData = addData.filter((el) => el.check !== true);
 
-      setData(filterData);
+      setAllData(filterData);
 
      
 
     }
 
+    // adding localstorage
+
+    useEffect(() => {
+     
+        localStorage.setItem("todoData", JSON.stringify(allData))
+
+    }, [allData])
+    
 
 
 
@@ -137,14 +178,16 @@ const Home = () => {
               className=" w-[90%] placeholder:italic text-xl pl-5 py-2 rounded-md border-2 border-gray-400 outline-none "
               type="text"
               placeholder="Add items"
+               value={input}
+              onChange={(e)=> {setInput(e.target.value)}}
             />
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+            <button onClick={()=> {addData()}   } className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
               Add
             </button>
           </div>
 
           <div className="w-[50%]  boder-2 border-red-200  ">
-            {data.map((ele) => (
+            {allData.map((ele) => (
               <div className=" flex justify-between " key={ele.id}>
                 <div className="flex gap-2 mb-5">
                   <input
