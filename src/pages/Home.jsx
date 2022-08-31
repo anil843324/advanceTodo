@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { MdDelete } from "react-icons/md";
-// let arr = [
-//   { items: "Apple purchage from market", id: 1, check: false },
-//   { items: "Orange purchage from market", id: 2, check: true },
-//   { items: "Brinjal purchage from market", id: 3, check: false },
-//   { items: "Radish purchage from market", id: 4, check: true },
-//   { items: "Cucumber purchage from market", id: 5, check: false },
-//   { items: "Gava purchage from market", id: 6, check: true },
-// ];
+
 
 // get local storage data 
 const getLocalStorageData=()=>{
