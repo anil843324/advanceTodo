@@ -5,17 +5,13 @@ import { MdDelete } from "react-icons/md";
 
 // get local storage data 
 const getLocalStorageData=()=>{
-
         const lists=localStorage.getItem('todoData')
        if(lists){
-
         return  JSON.parse(lists)
        }else{
         return []
        }
-   
 }
-
 
 
 const Home = () => {
@@ -32,6 +28,18 @@ const Home = () => {
 
    const [allData,setAllData]=useState(getLocalStorageData())
 
+   const [acitved,setActived]=useState(getLocalStorageData())
+    const [completedd,setCompletedd]=useState(getLocalStorageData())
+
+   
+
+    console.log("all data",allData)
+
+     console.log("active Data",acitved)
+     console.log("completed" , completedd)
+
+    
+  
 
   const handleClick = (props) => {
     if (props === "all") {
@@ -43,7 +51,7 @@ const Home = () => {
           completed: false,
         };
       });
-      //  setAllData(addData);
+        setAllData(allData);
     } else if (props === "active") {
       setToggle((i) => {
         return {
@@ -53,9 +61,8 @@ const Home = () => {
           completed: false,
         };
       });
-      let filterData = allData.filter((el) => el.check === false);
-
-       setAllData(filterData);
+      let filterData =  acitved.filter((el) => el.check === false);
+       setActived(filterData);
     } else if (props === "completed") {
       setToggle((i) => {
         return {
@@ -64,9 +71,9 @@ const Home = () => {
           completed: true,
         };
       });
-      let filterData = allData.filter((el) => el.check === true);
+      let filterData = completedd&& completedd.filter((el) => el.check === true);
 
-      setAllData(filterData);
+      setCompletedd(filterData);
     }
   };
 
@@ -82,6 +89,10 @@ const Home = () => {
         return el;
       })
     );
+
+
+  
+
   };
 
    // add data 
@@ -102,9 +113,9 @@ const Home = () => {
   //  delete single Data
     const handleDeleteSinglData=(index)=>{
           
-      let filterData = addData.filter((el) => el.id !== index);
+      let filterData = completedd.filter((el) => el.id !== index);
 
-      setAllData(filterData);
+      setCompletedd(filterData);
      
 
 
@@ -113,14 +124,14 @@ const Home = () => {
     // delete all the data
     const handleDeleteAll=()=>{
         
-      let filterData = addData.filter((el) => el.check !== true);
+      let filterData = allData.filter((el) => el.check !== true);
 
       setAllData(filterData);
 
      
 
     }
-
+   
     // adding localstorage
 
     useEffect(() => {
@@ -129,9 +140,8 @@ const Home = () => {
 
     }, [allData])
     
-
-
-
+  
+   
 
   return (
     <div className="  h-screen  border border-indigo-600    ">
@@ -180,7 +190,7 @@ const Home = () => {
           </div>
 
           <div className="w-[50%]  boder-2 border-red-200  ">
-            {allData.map((ele) => (
+            { toggle.all && allData.map((ele) => (
               <div className=" flex justify-between " key={ele.id}>
                 <div className="flex gap-2 mb-5">
                   <input
@@ -202,10 +212,54 @@ const Home = () => {
                 </div>
                   </> : <></>
                 }
-               
+              </div>
+            ))}
+            { toggle.active && acitved.map((ele) => (
+              <div className=" flex justify-between " key={ele.id}>
+                <div className="flex gap-2 mb-5">
+                  <input
+                    type="checkbox"
+                    value={ele.items}
+                    onChange={handleChange}
+                    className=" w-4  cursor-pointer "
+                    checked={ele.check}
+                  />
+                  <label className={ele.check ? "line-through" : ""}>
+                    {ele.items}
+                  </label>
+                </div>
 
+                {
+                  toggle.completed ? <>
+                  <div className=" cursor-pointer">
+                  <MdDelete onClick={()=> {handleDeleteSinglData(ele.id) }} size={25} />
+                </div>
+                  </> : <></>
+                }
+              </div>
+            ))}
+            { toggle.completed && completedd.map((ele) => (
+              <div className=" flex justify-between " key={ele.id}>
+                <div className="flex gap-2 mb-5">
+                  <input
+                    type="checkbox"
+                    value={ele.items}
+                    onChange={handleChange}
+                    className=" w-4  cursor-pointer "
+                    checked={ele.check}
+                  />
+                  <label className={ele.check ? "line-through" : ""}>
+                    {ele.items}
+                  </label>
+                </div>
 
-
+                {
+                  toggle.completed ? <>
+                  <div className=" cursor-pointer">
+                  <MdDelete onClick={()=> {handleDeleteSinglData(ele.id) }} size={25} />
+                </div>
+                  </> : <></>
+                }
               </div>
             ))}
           </div>
