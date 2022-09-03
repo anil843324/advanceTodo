@@ -12,6 +12,9 @@ const getLocalStorageData = () => {
   }
 };
 
+
+
+
 const Home = () => {
   const [toggle, setToggle] = useState({
     all: true,
@@ -154,6 +157,7 @@ const Home = () => {
             >
               Completed
             </span>
+
           </div>
 
           <div className=" w-[50%]  flex justify-evenly  ">
@@ -170,6 +174,7 @@ const Home = () => {
               onClick={() => {
                 addData();
               }}
+              
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
             >
               Add
