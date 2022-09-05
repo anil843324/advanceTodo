@@ -12,9 +12,6 @@ const getLocalStorageData = () => {
   }
 };
 
-
-
-
 const Home = () => {
   const [toggle, setToggle] = useState({
     all: true,
@@ -71,7 +68,7 @@ const Home = () => {
   };
 
   const handleChange = (e) => {
-    const { value, checked } = e.target;
+    const { value } = e.target;
 
     setShowData(
       showData.map((el) => {
@@ -115,10 +112,22 @@ const Home = () => {
   };
 
   //  delete single Data
-  const handleDeleteSinglData = (index) => {};
+  const handleDeleteSinglData = (index) => {
+       let filterData=showData.filter((currI)=> currI.id!==index)
+       let filterData2=allData.filter((currI)=> currI.id!==index)
+        setShowData(filterData)
+        setAllData(filterData2)
+
+  };
 
   // delete all the data
-  const handleDeleteAll = () => {};
+  const handleDeleteAll = () => {
+
+    let filterData=showData.filter((currI)=> currI.check===false)
+    let filterData2=allData.filter((currI)=> currI.check===false)
+    setShowData(filterData)
+    setAllData(filterData2)
+  };
 
   // adding localstorage
 
@@ -132,7 +141,7 @@ const Home = () => {
         <h1 className="text-3xl text-center font-[600] mb-10  mt-10">#Todo</h1>
 
         <div className="   flex justify-center items-center flex-col gap-4  ">
-          <div className=" w-[50%] flex text-xl  items-center  font-[600] border-b-2 border-gray-400  cursor-pointer justify-evenly  pb-2    ">
+          <div className="  gap-12 md:w-[50%] flex text-xl  items-center  font-[600] border-b-2 border-gray-400  cursor-pointer md:justify-evenly  pb-2    ">
             <span
               className={toggle.all ? "border-b-4 border-blue-400   " : ""}
               onClick={() => {
@@ -160,7 +169,7 @@ const Home = () => {
 
           </div>
 
-          <div className=" w-[50%]  flex justify-evenly  ">
+          <div className="  gap-2  md:w-[50%]  flex md:justify-evenly  ">
             <input
               className=" w-[90%] placeholder:italic text-xl pl-5 py-2 rounded-md border-2 border-gray-400 outline-none "
               type="text"
@@ -181,7 +190,7 @@ const Home = () => {
             </button>
           </div>
 
-          <div className="w-[50%]  boder-2 border-red-200  ">
+          <div className="  w-full  pl-12 md:pl-0 md:pr-0 pr-12 md:w-[50%]  boder-2 border-red-200  ">
             {showData.map((ele) => (
               <div className=" flex justify-between " key={ele.id}>
                 <div className="flex gap-2 mb-5">
