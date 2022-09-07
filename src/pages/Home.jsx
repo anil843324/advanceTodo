@@ -136,7 +136,7 @@ const Home = () => {
   }, [allData]);
 
   return (
-    <div className="  h-screen  border border-indigo-600    ">
+    <div className="  h-screen  border    ">
       <div>
         <h1 className="text-3xl text-center font-[600] mb-10  mt-10">#Todo</h1>
 
@@ -169,9 +169,9 @@ const Home = () => {
 
           </div>
 
-          <div className="  gap-2  md:w-[50%]  flex md:justify-evenly  ">
+          <div className="   gap-2  md:w-[50%]  flex md:justify-evenly  justify-center  ">
             <input
-              className=" w-[90%] placeholder:italic text-xl pl-5 py-2 rounded-md border-2 border-gray-400 outline-none "
+              className=" w-[60%]  md:w-[90%]  placeholder:italic text-xl pl-5 py-2 rounded-md border-2 border-gray-400 outline-none "
               type="text"
               placeholder="Add items"
               value={input}
@@ -190,10 +190,10 @@ const Home = () => {
             </button>
           </div>
 
-          <div className="  w-full  pl-12 md:pl-0 md:pr-0 pr-12 md:w-[50%]  boder-2 border-red-200  ">
+          <div className=" w-[100%]  pl-12 md:pl-0 md:pr-0 pr-12 md:w-[50%]  boder-2 border-red-200  ">
             {showData.map((ele) => (
-              <div className=" flex justify-between " key={ele.id}>
-                <div className="flex gap-2 mb-5">
+              <div className=" flex justify-between  " key={ele.id}>
+                <div className="flex  gap-2 mb-5">
                   <input
                     type="checkbox"
                     value={ele.items}
