@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 
+
 // get local storage data
 const getLocalStorageData = () => {
   const lists = localStorage.getItem("todoData");
@@ -22,6 +23,10 @@ const Home = () => {
   // const [data, setData] = useState(arr);
 
   const [input, setInput] = useState("");
+
+  //  getting userInput from Child component 
+  
+   
 
   const [allData, setAllData] = useState(getLocalStorageData());
 
@@ -168,7 +173,7 @@ const Home = () => {
             </span>
 
           </div>
-
+            {/*  user from input */}
           <div className="   gap-2  md:w-[50%]  flex md:justify-evenly  justify-center  ">
             <input
               className=" w-[60%]  md:w-[90%]  placeholder:italic text-xl pl-5 py-2 rounded-md border-2 border-gray-400 outline-none "
@@ -179,6 +184,7 @@ const Home = () => {
                 setInput(e.target.value);
               }}
             />
+           
             <button
               onClick={() => {
                 addData();
